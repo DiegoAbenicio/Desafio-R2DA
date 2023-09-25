@@ -1,26 +1,32 @@
 <template>
   <div id="app">
-    <RegisterPage msg="Seção de cadastros"/>
+    <nav>
+      <router-link to="/">Cadastros</router-link> |
+      <router-link to="/registrado">Registrados</router-link>
+    </nav>
+    <router-view/>
   </div>
 </template>
 
-<script>
-import RegisterPage from './components/RegisterPage.vue'
-
-export default {
-  name: 'App',
-  components: {
-    RegisterPage
-  }
-}
-</script>
-
 <style>
 #app {
-  display: row;
-  justify-content: center;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  margin-top: 10vh;
   color: #2c3e50;
+}
+
+nav {
+  padding: 30px;
+}
+
+nav a {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+nav a.router-link-exact-active {
+  color: #42b983;
 }
 </style>
