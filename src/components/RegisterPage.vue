@@ -79,7 +79,6 @@ export default {
   },
   data() {
     return {
-      // Crie uma cópia da prop pessoa em data para modificação
       pessoaLocal: { ...this.pessoa },
     };
   },

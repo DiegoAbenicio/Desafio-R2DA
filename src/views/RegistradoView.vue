@@ -4,7 +4,6 @@
   </div>
 </template>
 <script>
-// @ is an alias to /src
 import TablePage from "@/components/TablePage.vue";
 
 export default {

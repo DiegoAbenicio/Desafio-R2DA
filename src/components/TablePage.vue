@@ -68,9 +68,34 @@ export default {
       });
     },
     remover(pessoa) {
-      Pessoas.deletar(pessoa.id);
-      Alerta.fire("Deletado com sucesso!", "", "success");
-      this.listar();
+      Alerta.fire({
+        title: "Você tem certeza?",
+        text: "Você não poderá reverter isso!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Sim, delete!",
+        cancelButtonText: "Cancelar",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Pessoas.deletar(pessoa.id)
+            .then(() => {
+              this.listar();
+              Alerta.fire(
+                "Deletado!",
+                "A pessoa foi deletada com sucesso.",
+                "success"
+              );
+            })
+            .catch((error) => {
+              console.error("Erro ao deletar pessoa:", error);
+              Alerta.fire(
+                "Erro ao deletar pessoa",
+                "Ocorreu um erro na exclusão.",
+                "error"
+              );
+            });
+        }
+      });
     },
     listar() {
       Pessoas.listar().then((resposta) => {
