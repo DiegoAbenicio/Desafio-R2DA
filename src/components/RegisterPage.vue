@@ -21,7 +21,6 @@
                   v-model="pessoaLocal.nome"
                   class="form-control"
                   placeholder="Insira o nome"
-                  required
                 />
               </div>
               <div class="form-row col-md-12">
@@ -32,7 +31,6 @@
                     v-model="pessoaLocal.email"
                     class="form-control"
                     placeholder="Insira o email"
-                    required
                   />
                 </div>
                 <div class="form-group col-md-6">
@@ -42,7 +40,7 @@
                     v-model="pessoaLocal.telefone"
                     class="form-control"
                     placeholder="Insira o telefone"
-                    required
+                    @input="filtrarNumeros"
                   />
                 </div>
               </div>
@@ -53,7 +51,6 @@
                   v-model="pessoaLocal.endereco"
                   class="form-control"
                   placeholder="Insira o endereço"
-                  required
                 />
               </div>
             </div>
@@ -97,8 +94,29 @@ export default {
     }
   },
   methods: {
+    filtrarNumeros() {
+      this.pessoaLocal.telefone = this.pessoaLocal.telefone.replace(/\D/g, "");
+    },
+
     salvar() {
-      if (!this.pessoaLocal.id) {
+      if (!this.pessoaLocal.nome || this.pessoaLocal.nome < 3) {
+        Alerta.fire("Insira um nome válido!", "", "error");
+      } else if (!this.pessoaLocal.email) {
+        Alerta.fire("Insira um email!", "", "error");
+      } else if (!this.pessoaLocal.telefone) {
+        Alerta.fire("Insira um telefone!", "", "error");
+      } else if (this.pessoaLocal.telefone != 11) {
+        Alerta.fire(
+          "O número de digitos não condiz com um telefone válido",
+          "",
+          "error"
+        );
+      } else if (
+        !this.pessoaLocal.endereco ||
+        !this.pessoaLocal.endereco >= 5
+      ) {
+        Alerta.fire("Insira um endereco!", "", "error");
+      } else if (!this.pessoaLocal.id) {
         Pessoas.salvar(this.pessoaLocal)
           .then((resposta) => {
             this.pessoaLocal = {};
