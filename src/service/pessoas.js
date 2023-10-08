@@ -1,4 +1,4 @@
-import { http } from './config'
+import { http } from "./config";
 
 export default {
   listar: () => {
@@ -15,5 +15,5 @@ export default {
 
   deletar: (id) => {
     return http.delete(`${id}`);
-  }
+  },
 };

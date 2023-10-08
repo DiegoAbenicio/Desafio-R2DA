@@ -1,7 +1,12 @@
 <template>
   <div>
     <h1 class="mb-5">
-      <img class="img-fluid m-1 mr-auto" style="max-width: 150px;" alt="R2DA Logo" src="../assets/R2DA_Logo.png"> 
+      <img
+        class="img-fluid m-1 mr-auto"
+        style="max-width: 150px"
+        alt="R2DA Logo"
+        src="../assets/R2DA_Logo.png"
+      />
       {{ msg }}
     </h1>
     <div>
@@ -20,8 +25,12 @@
                 <td>{{ pessoa.email }}</td>
                 <td>{{ pessoa.telefone }}</td>
                 <td>
-                  <button @click="editar(pessoa)" class="btn btn-primary mr-1">Editar</button>
-                  <button @click="remover(pessoa)" class="btn btn-danger ml-1">Deletar</button>
+                  <button @click="editar(pessoa)" class="btn btn-primary mr-1">
+                    Editar
+                  </button>
+                  <button @click="remover(pessoa)" class="btn btn-danger ml-1">
+                    Deletar
+                  </button>
                 </td>
               </tr>
             </table>
@@ -33,56 +42,54 @@
 </template>
 
 <script>
-import Pessoas from '../service/pessoas'
+import Pessoas from "../service/pessoas";
+import Alerta from "sweetalert2";
 
 export default {
-  name: 'TablePage',
+  name: "TablePage",
   props: {
-    msg: String
+    msg: String,
   },
-  data(){
-    return{
-      pessoas: []
-    }
+  data() {
+    return {
+      pessoas: [],
+    };
   },
 
-  mounted(){
+  mounted() {
     this.listar();
   },
 
   methods: {
     editar(pessoa) {
       this.$router.push({
-        name: 'home',
-        query: { pessoa: JSON.stringify(pessoa) }
+        name: "home",
+        query: { pessoa: JSON.stringify(pessoa) },
       });
     },
-    remover(pessoa){
-      Pessoas.deletar(pessoa.id)
-      alert('Deletado com sucesso!')
+    remover(pessoa) {
+      Pessoas.deletar(pessoa.id);
+      Alerta.fire("Deletado com sucesso!", "", "success");
       this.listar();
     },
-    listar(){
-      Pessoas.listar().then(resposta =>{
-        this.pessoas = resposta.data
-      })
-    }
-  }
-
-
-}
+    listar() {
+      Pessoas.listar().then((resposta) => {
+        this.pessoas = resposta.data;
+      });
+    },
+  },
+};
 </script>
 
 <style scoped>
-  .box{
-    background-color: #31a59d;
-    padding: 1em;
-    border-radius: 25px;
-  }
-  .table{
-    background: #fff;
-    color: black;
-    border-color: #1f7d74;
-  }
-
+.box {
+  background-color: #31a59d;
+  padding: 1em;
+  border-radius: 25px;
+}
+.table {
+  background: #fff;
+  color: black;
+  border-color: #1f7d74;
+}
 </style>

@@ -5,12 +5,12 @@
 </template>
 <script>
 // @ is an alias to /src
-import TablePage from '@/components/TablePage.vue'
+import TablePage from "@/components/TablePage.vue";
 
 export default {
-  name: 'TableView',
+  name: "TableView",
   components: {
-    TablePage
-  }
-}
+    TablePage,
+  },
+};
 </script>

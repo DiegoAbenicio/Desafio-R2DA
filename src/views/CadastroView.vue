@@ -1,16 +1,16 @@
 <template>
   <div class="home">
-    <RegisterPage msg="Seção de Cadastros"/>
+    <RegisterPage msg="Seção de Cadastros" />
   </div>
 </template>
 <script>
 // @ is an alias to /src
-import RegisterPage from '@/components/RegisterPage.vue'
+import RegisterPage from "@/components/RegisterPage.vue";
 
 export default {
-  name: 'HomeView',
+  name: "HomeView",
   components: {
-    RegisterPage
-  }
-}
+    RegisterPage,
+  },
+};
 </script>
