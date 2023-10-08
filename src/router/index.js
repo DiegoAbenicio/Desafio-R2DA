@@ -8,12 +8,14 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    component: HomeView,
+    props: true,
   },
   {
     path: '/registrado',
     name: 'registrado',
-    component: () => import(/* webpackChunkName: "about" */ '../views/RegistradoView.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/RegistradoView.vue'),
+    
   }
 ]
 

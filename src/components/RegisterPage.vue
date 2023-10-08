@@ -7,29 +7,32 @@
       <div class="d-flex justify-content-center">
         <div class="col-md-5 box">
           <div class="mt-3 mb-3">
-            <div class="form-row col-xs-12 col-sm-12 col-md-12">
-              <div class="form-group col-md-12">
-                <Strong class="d-flex justify-content-left">Nome</Strong>
-                <input type="text" v-model="name" class="form-control" placeholder="Insira o nome">
-              </div>
-              <div class="form-row col-md-12">
-                <div class="form-group col-md-6">
-                  <Strong class="d-flex justify-content-left">Email</Strong>
-                  <input type="text" v-model="email" class="form-control" placeholder="Insira o email">
+            <form @submit.prevent="salvar">
+              <div class="form-row col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group col-md-12">
+                  <Strong class="d-flex justify-content-left">Nome</Strong>
+                  <input type="text" v-model="pessoaLocal.nome" class="form-control" placeholder="Insira o nome">
                 </div>
-                <div class="form-group col-md-6">
-                  <Strong class="d-flex justify-content-left">Telefone</Strong>
-                  <input type="text" v-model="phone" class="form-control" placeholder="Insira o telefone">
+                <div class="form-row col-md-12">
+                  <div class="form-group col-md-6">
+                    <Strong class="d-flex justify-content-left">Email</Strong>
+                    <input type="text" v-model="pessoaLocal.email" class="form-control" placeholder="Insira o email">
+                  </div>
+                  <div class="form-group col-md-6">
+                    <Strong class="d-flex justify-content-left">Telefone</Strong>
+                    <input type="text" v-model="pessoaLocal.telefone" class="form-control" placeholder="Insira o telefone">
+                  </div>
+                </div>
+                <div class="form-group col-md-12">
+                  <Strong class="d-flex justify-content-left">Endereço</Strong>
+                  <input type="text" v-model="pessoaLocal.endereco" class="form-control" placeholder="Insira o endereço">
                 </div>
               </div>
-              <div class="form-group col-md-12">
-                <Strong class="d-flex justify-content-left">Endereço</Strong>
-                <input type="text" v-model="address" class="form-control" placeholder="Insira o endereço">
+              <div>
+                {{ pessoaLocal.id }}
+                <button type="submit" class="btn mt-2">Realizar Cadastro</button>
               </div>
-            </div>
-            <div>
-              <button v-on:click="addComment" class="btn mt-2">Realizar Cadastro</button>
-            </div>
+            </form>
           </div>
         </div>
       </div>
@@ -37,41 +40,52 @@
   </template>
 
   <script>
-  export default {
-    name: 'RegisterPage',
-    props: {
-      msg: String
-    },
-    data(){
-      return{
-        name: '',
-        email: '',
-        phone: '',
-        address: '',
-        comments: [],
-      }
-    },
-    methods: {
-      addComment() {
-        if (this.name.trim() === '' || this.email.trim() === '' || this.phone.trim() === '' || this.address.trim() === '') {
-        return;
-      }
-                  
-        this.comments.push({
-          name: this.name,
-          email: this.email,
-          phone: this.phone,
-          address: this.address,
-        });
-
-        this.name = '';
-        this.email = '';
-        this.phone = '';
-        this.address = '';
+    import Pessoas from '../service/pessoas'
+    export default {
+      name: 'RegisterPage',
+      props: {
+        msg: String,
+        pessoa: Object
       },
-    }
-  }
-  </script>
+      data() {
+        return {
+          // Crie uma cópia da prop pessoa em data para modificação
+          pessoaLocal: { ...this.pessoa }
+        };
+      },
+      created() {
+        if (this.$route.query.pessoa) {
+          this.pessoaLocal = JSON.parse(this.$route.query.pessoa);
+        } else {
+          this.pessoaLocal = {
+            id: '',
+            nome: '',
+            email: '',
+            telefone: '',
+            endereco: '',
+            errors: []
+          };
+        }
+      },
+      methods: {
+        salvar() {
+          if (!this.pessoaLocal.id) {
+            Pessoas.salvar(this.pessoaLocal).then(resposta => {
+              this.pessoaLocal = {}
+              alert('Salvo com sucesso!')
+              resposta.data;
+            })
+          } else {
+            Pessoas.atualizar(this.pessoaLocal.id, this.pessoaLocal).then(resposta => {
+              this.pessoaLocal = {}
+              alert('Atualizado com sucesso!')
+              resposta.data;
+            })
+          }
+        }
+      }
+    };
+    </script>
 
   <style scoped>
   .box{
