@@ -105,13 +105,7 @@ export default {
   },
 };
 </script>
-
 <style scoped>
-.box {
-  background-color: #31a59d;
-  padding: 1em;
-  border-radius: 25px;
-}
 .table {
   background: #fff;
   color: black;

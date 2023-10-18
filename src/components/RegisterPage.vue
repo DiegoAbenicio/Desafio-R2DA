@@ -149,13 +149,14 @@ export default {
   },
 };
 </script>
-
-<style scoped>
+<style>
 .box {
   background-color: #31a59d;
   padding: 1em;
   border-radius: 25px;
 }
+</style>
+<style scoped>
 .form-control {
   background: #fff;
   color: black;
