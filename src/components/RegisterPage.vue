@@ -105,7 +105,7 @@ export default {
         Alerta.fire("Insira um email!", "", "error");
       } else if (!this.pessoaLocal.telefone) {
         Alerta.fire("Insira um telefone!", "", "error");
-      } else if (this.pessoaLocal.telefone != 11) {
+      } else if (!this.pessoaLocal.telefone == 11) {
         Alerta.fire(
           "O número de digitos não condiz com um telefone válido",
           "",
